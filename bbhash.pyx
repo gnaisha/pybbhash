@@ -54,9 +54,13 @@ ctypedef mphf[uint64_t, hasher_t] mphf_t
 cdef class PyMPHF:
     cdef unique_ptr[mphf_t] c_mphf
 
-    def __cinit__(self, list kk, unsigned long long nelem, int num_thread, float gamma):
-        cdef vector[uint64_t] kmers = kk
+    def __cinit__(self, uint64_t [:] kk, unsigned long long nelem, int num_thread, float gamma):
+        cdef vector[uint64_t] kmers
+        N = kk.shape[0]
+        for i in range(N):
+            kmers.push_back(kk[i])
         self.c_mphf.reset(new mphf_t(nelem, kmers, num_thread, gamma))
+        # self.c_mphf.reset(new mphf_t(nelem, kk, num_thread, gamma))
 
     def lookup(self, uint64_t kmer):
         cdef uint64_t value = deref(self.c_mphf).lookup(kmer)
