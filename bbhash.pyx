@@ -3,6 +3,7 @@ from libcpp.vector cimport vector
 from libcpp.memory cimport unique_ptr
 from libc.stdint cimport uint64_t, UINT64_MAX
 from cython.operator cimport dereference as deref
+import numpy as np
 
 ### wrap iostream stuff
 
