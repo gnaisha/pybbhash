@@ -85,7 +85,7 @@ cdef class PyMPHF:
             del inputter
 
 def load_mphf(filename):
-    m = PyMPHF([], 0, 1, 1.0)
+    m = PyMPHF(np.array([], dtype='uint64'), 0, 1, 1.0)
     m.load(filename)
 
     return m
